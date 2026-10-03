@@ -1,4 +1,4 @@
-const CACHE = 'epubreader-v1';
+const CACHE = 'epubreader-v2';
 const FILES = [
   './',
   './index.html',
@@ -6,9 +6,7 @@ const FILES = [
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-512.png',
-  './lib/jszip.min.js',
-  './lib/pdf.min.js',
-  './lib/pdf.worker.min.js'
+  './lib/jszip.min.js'
 ];
 
 self.addEventListener('install', e => {
