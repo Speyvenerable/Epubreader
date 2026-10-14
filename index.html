@@ -303,7 +303,16 @@ addEventListener('keydown',e=>{
 });
 addEventListener('pagehide',flush);
 showLib();
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+if('serviceWorker' in navigator){
+  addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').then(()=>navigator.serviceWorker.ready).then(async()=>{
+      const c=await caches.open('epubreader-v3'),ks=(await c.keys()).map(r=>r.url);
+      const ok=['index.html','lib/jszip.min.js'].every(n=>ks.some(u=>u.endsWith(n)));
+      setTimeout(()=>toast(ok?'Ready to use offline':'Offline files not saved yet. Reload once while online.'),900);
+    }).catch(()=>{});
+  });
+}
 </script>
 </body>
 </html>
