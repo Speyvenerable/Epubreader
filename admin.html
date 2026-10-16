@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Epubfinder — Add a book</title>
+<style>
+:root{--bg:#fff;--ink:#0a0a0a;--muted:#757575;--line:#e6e6e6;--bar:#efefef}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--ink:#f5f5f5;--muted:#8a8a8a;--line:#262626;--bar:#161616}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.w{max-width:680px;margin:0 auto;padding:28px 18px 80px}
+h1{font:700 26px Georgia,serif;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 22px}
+label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+input,textarea,select{width:100%;font:inherit;font-size:15px;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+#out,#cur{font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;min-height:150px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.row>*{flex:1}
+button,.b{font:inherit;font-weight:600;padding:11px 18px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;text-align:center;text-decoration:none;transition:transform .15s}
+button:active,.b:active{transform:scale(.97)}
+.g{background:none;color:var(--ink)}
+.step{background:var(--bar);border-radius:16px;padding:16px 18px;margin-top:22px;font-size:14px}
+.step b{display:block;margin-bottom:6px}
+#st{color:var(--muted);font-size:13px;margin-top:6px;min-height:18px}
+.two{display:grid;grid-template-columns:1fr 110px;gap:10px}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>Add a book</h1>
+  <p class="sub">Owner tool for novel EPUBs. Pick an EPUB, check the details, then follow the steps below. Nothing is uploaded from this page.</p>
+
+  <label for="file">1. Choose the EPUB</label>
+  <input id="file" type="file" accept=".epub,application/epub+zip">
+  <div id="st"></div>
+
+  <label for="title">Title</label><input id="title">
+  <label for="author">Author</label><input id="author">
+  <label for="desc">Description</label><textarea id="desc" maxlength="500"></textarea>
+  <label for="tag">Category</label><select id="tag"></select>
+
+  <label for="cur">2. Paste your current books.json (leave empty for the first book)</label>
+  <textarea id="cur" placeholder="[]"></textarea>
+
+  <label for="out">3. New books.json</label>
+  <textarea id="out" readonly></textarea>
+
+  <div class="row">
+    <button id="dbook" class="g">Download renamed EPUB</button>
+    <button id="djson">Download books.json</button>
+    <button id="copy" class="g">Copy books.json</button>
+  </div>
+
+  <div class="step"><b>Then publish it</b>
+  In your GitHub repo, upload the renamed EPUB into the <code>books</code> folder, and replace <code>books.json</code> with the new one. Wait a minute and the book appears on the site.</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const TAGS=['Fantasy','Romance','Sci-Fi','Mystery','Horror','Action','Adventure','Slice of Life','Classics','Other'];
+$('tag').innerHTML=TAGS.map(t=>`<option>${t}</option>`).join('');
+let file=null,added=Date.now();
+const slug=s=>(s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'book');
+
+$('file').onchange=async e=>{
+  file=e.target.files[0];if(!file)return;added=Date.now();$('st').textContent='Reading…';
+  try{
+    const zip=await JSZip.loadAsync(file);
+    const x=async p=>new DOMParser().parseFromString(await zip.file(p).async('string'),'application/xml');
+    const opfPath=(await x('META-INF/container.xml')).querySelector('rootfile').getAttribute('full-path');
+    const opf=await x(opfPath);
+    const g=n=>{const el=opf.getElementsByTagName(n)[0];return el?el.textContent.trim():'';};
+    $('title').value=g('dc:title')||file.name.replace(/\.epub$/i,'');
+    $('author').value=g('dc:creator');
+    $('desc').value=(g('dc:description')||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,500);
+    $('st').textContent='Valid EPUB: '+(file.size/1048576).toFixed(2)+' MB';
+  }catch(err){$('st').textContent='This does not look like a valid EPUB file.';file=null;}
+  build();
+};
+
+function existing(){
+  const t=$('cur').value.trim();if(!t)return [];
+  try{const j=JSON.parse(t);if(!Array.isArray(j))throw 0;return j;}catch(e){return null;}
+}
+function build(){
+  const list=existing();
+  if(list===null){$('out').value='The pasted books.json is not valid. Paste the whole file again.';return;}
+  if(!file){$('out').value='';return;}
+  let base=slug($('title').value),name=base+'.epub',n=2;
+  const used=new Set(list.map(b=>b.file));
+  while(used.has(name))name=base+'-'+(n++)+'.epub';
+  const entry={title:$('title').value.trim(),author:$('author').value.trim(),desc:$('desc').value.trim(),tag:$('tag').value,file:name,size:file.size,added};
+  $('out').value=JSON.stringify([entry,...list],null,2);
+  $('dbook').textContent='Download as '+name;
+  build.name=name;
+}
+['title','author','desc','tag','cur'].forEach(i=>$(i).addEventListener('input',build));
+$('tag').addEventListener('change',build);
+
+function save(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);}
+$('dbook').onclick=()=>{if(file&&build.name)save(file,build.name);};
+$('djson').onclick=()=>{if($('out').value.startsWith('['))save(new Blob([$('out').value],{type:'application/json'}),'books.json');};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('out').value);$('copy').textContent='Copied';setTimeout(()=>$('copy').textContent='Copy books.json',1500);}catch(e){$('out').select();}};
+</script>
+</body>
+</html>

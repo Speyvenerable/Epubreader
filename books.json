@@ -1,0 +1,178 @@
+[
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "desc": "Elizabeth Bennet and Mr. Darcy clash over pride, class and first impressions.",
+    "tag": "Romance",
+    "file": "https://www.gutenberg.org/ebooks/1342.epub3.images",
+    "added": 1791039028901
+  },
+  {
+    "title": "Sense and Sensibility",
+    "author": "Jane Austen",
+    "desc": "Two sisters with opposite temperaments search for love and security.",
+    "tag": "Romance",
+    "file": "https://www.gutenberg.org/ebooks/161.epub3.images",
+    "added": 1790995828901
+  },
+  {
+    "title": "Emma",
+    "author": "Jane Austen",
+    "desc": "A confident matchmaker misreads everyone's heart except her own.",
+    "tag": "Romance",
+    "file": "https://www.gutenberg.org/ebooks/158.epub3.images",
+    "added": 1790952628901
+  },
+  {
+    "title": "Persuasion",
+    "author": "Jane Austen",
+    "desc": "A second chance at love arrives years after a broken engagement.",
+    "tag": "Romance",
+    "file": "https://www.gutenberg.org/ebooks/105.epub3.images",
+    "added": 1790909428901
+  },
+  {
+    "title": "Jane Eyre",
+    "author": "Charlotte Brontë",
+    "desc": "An orphan becomes a governess and meets the secretive Mr. Rochester.",
+    "tag": "Romance",
+    "file": "https://www.gutenberg.org/ebooks/1260.epub3.images",
+    "added": 1790866228901
+  },
+  {
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "desc": "A stormy tale of love and revenge on the Yorkshire moors.",
+    "tag": "Romance",
+    "file": "https://www.gutenberg.org/ebooks/768.epub3.images",
+    "added": 1790823028901
+  },
+  {
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "desc": "A young scientist builds a living creature and must face what he has made.",
+    "tag": "Horror",
+    "file": "https://www.gutenberg.org/ebooks/84.epub3.images",
+    "added": 1790779828901
+  },
+  {
+    "title": "Dracula",
+    "author": "Bram Stoker",
+    "desc": "A solicitor travels to Transylvania and brings something terrible back to England.",
+    "tag": "Horror",
+    "file": "https://www.gutenberg.org/ebooks/345.epub3.images",
+    "added": 1790736628901
+  },
+  {
+    "title": "The Picture of Dorian Gray",
+    "author": "Oscar Wilde",
+    "desc": "A beautiful young man stays unchanged while his portrait pays the price.",
+    "tag": "Classics",
+    "file": "https://www.gutenberg.org/ebooks/174.epub3.images",
+    "added": 1790693428901
+  },
+  {
+    "title": "Great Expectations",
+    "author": "Charles Dickens",
+    "desc": "Pip, a poor orphan, rises in society thanks to a mysterious benefactor.",
+    "tag": "Classics",
+    "file": "https://www.gutenberg.org/ebooks/1400.epub3.images",
+    "added": 1790650228901
+  },
+  {
+    "title": "A Tale of Two Cities",
+    "author": "Charles Dickens",
+    "desc": "Love and sacrifice in London and Paris during the French Revolution.",
+    "tag": "Classics",
+    "file": "https://www.gutenberg.org/ebooks/98.epub3.images",
+    "added": 1790607028901
+  },
+  {
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "desc": "Captain Ahab's obsessive hunt for the white whale.",
+    "tag": "Adventure",
+    "file": "https://www.gutenberg.org/ebooks/2701.epub3.images",
+    "added": 1790563828901
+  },
+  {
+    "title": "Treasure Island",
+    "author": "Robert Louis Stevenson",
+    "desc": "A boy, a map and a crew of pirates searching for buried gold.",
+    "tag": "Adventure",
+    "file": "https://www.gutenberg.org/ebooks/120.epub3.images",
+    "added": 1790520628901
+  },
+  {
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "desc": "A wrongly imprisoned sailor escapes and plans a perfect revenge.",
+    "tag": "Adventure",
+    "file": "https://www.gutenberg.org/ebooks/1184.epub3.images",
+    "added": 1790477428901
+  },
+  {
+    "title": "The Three Musketeers",
+    "author": "Alexandre Dumas",
+    "desc": "A young Gascon joins three royal musketeers in a web of court intrigue.",
+    "tag": "Adventure",
+    "file": "https://www.gutenberg.org/ebooks/1257.epub3.images",
+    "added": 1790434228901
+  },
+  {
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "desc": "A poor student commits a crime and is haunted by guilt.",
+    "tag": "Classics",
+    "file": "https://www.gutenberg.org/ebooks/2554.epub3.images",
+    "added": 1790391028901
+  },
+  {
+    "title": "Little Women",
+    "author": "Louisa May Alcott",
+    "desc": "Four sisters grow up in New England during the Civil War.",
+    "tag": "Classics",
+    "file": "https://www.gutenberg.org/ebooks/514.epub3.images",
+    "added": 1790347828901
+  },
+  {
+    "title": "Alice's Adventures in Wonderland",
+    "author": "Lewis Carroll",
+    "desc": "A girl falls down a rabbit hole into a strange, nonsensical world.",
+    "tag": "Fantasy",
+    "file": "https://www.gutenberg.org/ebooks/11.epub3.images",
+    "added": 1790304628901
+  },
+  {
+    "title": "The War of the Worlds",
+    "author": "H. G. Wells",
+    "desc": "Martians invade Victorian England.",
+    "tag": "Sci-Fi",
+    "file": "https://www.gutenberg.org/ebooks/36.epub3.images",
+    "added": 1790261428901
+  },
+  {
+    "title": "Twenty Thousand Leagues Under the Sea",
+    "author": "Jules Verne",
+    "desc": "A professor joins Captain Nemo aboard the submarine Nautilus.",
+    "tag": "Sci-Fi",
+    "file": "https://www.gutenberg.org/ebooks/164.epub3.images",
+    "added": 1790218228901
+  },
+  {
+    "title": "The Hound of the Baskervilles",
+    "author": "Arthur Conan Doyle",
+    "desc": "Sherlock Holmes investigates a family curse and a spectral hound.",
+    "tag": "Mystery",
+    "file": "https://www.gutenberg.org/ebooks/2852.epub3.images",
+    "added": 1790175028901
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "desc": "A mysterious millionaire chases a lost love in Jazz Age New York.",
+    "tag": "Classics",
+    "file": "https://www.gutenberg.org/ebooks/64317.epub3.images",
+    "added": 1790131828901
+  }
+]
