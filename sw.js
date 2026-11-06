@@ -1,4 +1,4 @@
-const CACHE = 'epubreader-v3';
+const CACHE = 'epubreader-v4';
 const FILES = [
   './',
   './index.html',

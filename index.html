@@ -95,6 +95,48 @@ svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke
 .seg button.on{background:var(--accent);color:var(--ai);font-weight:600}
 #msg{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;visibility:hidden;transition:.3s;z-index:30}
 #msg.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
+/* notes */
+#rbot{margin-top:auto}
+#view{transition:right .3s cubic-bezier(.2,.8,.2,1)}
+mark.hl{background:color-mix(in srgb,var(--accent) 26%,transparent);color:inherit;border-radius:3px;cursor:pointer;padding:0 1px;transition:background .2s}
+mark.hl.has{border-bottom:2px solid var(--accent)}
+mark.hl:hover,mark.hl.flash{background:color-mix(in srgb,var(--accent) 50%,transparent)}
+#nb{position:relative}
+#nbadge{position:absolute;top:3px;right:1px;min-width:16px;height:16px;border-radius:8px;background:var(--accent);color:var(--ai);font:700 10px/16px system-ui,sans-serif;text-align:center;padding:0 4px}
+#nbadge[hidden]{display:none}
+#notes{position:absolute;top:0;bottom:0;right:0;width:min(360px,92%);background:var(--panel);border-left:1px solid var(--line);z-index:5;transform:translateX(102%);transition:transform .35s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:var(--shadow);padding-top:env(safe-area-inset-top,0px)}
+#notes.on{transform:none}
+@media (min-width:900px){
+  #notes{width:340px;z-index:2;box-shadow:none;padding-top:64px;padding-bottom:76px}
+  #rd.nopen #notes{transform:none}
+  #rd.nopen #view{right:340px}
+}
+.nh{display:flex;align-items:center;gap:8px;padding:14px 10px 6px 18px}
+.nh b{font:600 18px Georgia,serif;flex:1}
+#ntabs{margin:4px 14px 10px}
+#nc{margin:2px 14px 12px;padding:12px;border:1px solid var(--accent);border-radius:14px;background:var(--bg)}
+#nc[hidden]{display:none}
+.q{border-left:3px solid var(--accent);padding-left:10px;font:italic 14px/1.45 Georgia,serif;color:var(--muted);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+#notes textarea{width:100%;margin-top:10px;min-height:84px;resize:vertical;font:inherit;font-size:14.5px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);outline:none;transition:border-color .2s}
+#notes textarea:focus{border-color:var(--accent)}
+.nr{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.nbtn{padding:7px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;transition:.2s}
+.nbtn:hover{border-color:var(--accent)}
+.nbtn.p{background:var(--accent);color:var(--ai);border-color:var(--accent);font-weight:600}
+#nl{flex:1;overflow-y:auto;padding:0 14px 20px}
+.ni{padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,background .2s}
+.ni:hover{border-color:var(--accent)}
+.ni.flash{background:var(--bg);border-color:var(--accent)}
+.ni .cn{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ni .t{margin:8px 0 0;font-size:14.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ni .ia{display:flex;gap:4px;margin-top:8px}
+.ni .ia button{font-size:12.5px;color:var(--muted);padding:3px 8px;border-radius:999px;transition:.2s}
+.ni .ia button:hover{color:var(--ink);background:var(--bg)}
+.nempty{text-align:center;color:var(--muted);padding:34px 16px;font-size:14px;line-height:1.6}
+#stb{position:fixed;z-index:8;display:flex;gap:2px;padding:4px;background:var(--ink);color:var(--bg);border-radius:999px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility 0s .15s}
+#stb.on{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .15s}
+#stb button{padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:600;color:inherit}
+#stb button:hover{background:color-mix(in srgb,var(--bg) 20%,transparent)}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
@@ -125,12 +167,20 @@ svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke
     <button class="ib" id="back" title="Library"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
     <button class="ib" id="tocb" title="Contents"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></button>
     <div id="rt"></div>
+    <button class="ib" id="nb" title="Notes"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span id="nbadge" hidden>0</span></button>
     <button class="ib" id="aab" title="Text settings"><span style="font:700 15px Georgia,serif">Aa</span></button>
   </div>
   <div id="view"><article id="page"></article></div>
   <div id="rbot"><input id="seek" type="range" min="0" max="1000" value="0"><div id="pl"></div></div>
   <div id="sc"></div>
   <aside id="toc"><h4>Contents</h4><input id="tq" type="search" placeholder="Find a chapter…"><div id="tl"></div></aside>
+  <aside id="notes" aria-label="Notes">
+    <div class="nh"><b>Notes</b><button class="ib" id="ncl" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="seg" id="ntabs"><button data-v="ch" class="on">This chapter</button><button data-v="all">All notes</button></div>
+    <div id="nc" hidden><div class="q" id="ncq"></div><textarea id="nct" placeholder="Write your note…" maxlength="2000"></textarea><div class="nr"><button class="nbtn" id="ncc">Cancel</button><button class="nbtn p" id="ncs">Save note</button></div></div>
+    <div id="nl"></div>
+  </aside>
+  <div id="stb"><button id="stN">✎ Note</button><button id="stH">Highlight</button></div>
   <div id="aa">
     <label>Text size</label><input id="fs" type="range" min="14" max="32" step="1">
     <label>Font</label><div class="seg" id="ffs"><button data-v="serif">Serif</button><button data-v="sans">Sans</button></div>
@@ -234,20 +284,21 @@ addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('on');if(e.
 /* ---------- reader ---------- */
 let cur=null,B=null,imgUrls=[],saveT=null;
 const view=$('view'),page=$('page'),rd=$('rd');
-function panels(on){$('toc').classList.toggle('on',on==='toc');$('aa').classList.toggle('on',on==='aa');$('sc').classList.toggle('on',on==='toc'||on==='aa');}
+function panels(on){$('toc').classList.toggle('on',on==='toc');$('aa').classList.toggle('on',on==='aa');$('notes').classList.toggle('on',on==='notes');$('sc').classList.toggle('on',on==='toc'||on==='aa'||on==='notes');}
 $('tocb').onclick=()=>panels($('toc').classList.contains('on')?'':'toc');
 $('aab').onclick=()=>panels($('aa').classList.contains('on')?'':'aa');
 $('sc').onclick=()=>panels('');
-$('back').onclick=async()=>{clearTimeout(saveT);flush();panels('');rd.classList.remove('open');setTimeout(()=>{if(!rd.classList.contains('open')){page.innerHTML='';B=null;cur=null;imgUrls.forEach(URL.revokeObjectURL);imgUrls=[];}},400);showLib();};
+$('back').onclick=async()=>{clearTimeout(saveT);flush();panels('');hideTb();closeComposer();rd.classList.remove('open','nopen');setTimeout(()=>{if(!rd.classList.contains('open')){page.innerHTML='';B=null;cur=null;imgUrls.forEach(URL.revokeObjectURL);imgUrls=[];}},400);showLib();};
 
 async function openBook(rec){
-  cur=rec;rd.classList.add('open');rd.classList.remove('hide');$('rt').textContent=rec.title;
+  cur=rec;rec.notes=rec.notes||[];nEdit=null;nTab='ch';syncTabs();closeComposer();hideTb();rd.classList.add('open');rd.classList.remove('hide');$('rt').textContent=rec.title;
   page.innerHTML='<p style="text-align:center;color:var(--muted)">Opening…</p>';
   try{
     const z=await openZip(rec.blob);B={...z,n:z.spine.length,ch:0};
     $('tl').innerHTML=z.spine.map((s,i)=>`<a data-i="${i}"><i>${i+1}</i><span>${esc(z.names[s.href]||('Section '+(i+1)))}</span></a>`).join('');
     $('tq').value='';
     await goCh(Math.min(rec.ch||0,B.n-1),rec.pos||0);
+    if(wide()&&rec.notes.length)openNotes(true);
   }catch(e){page.innerHTML='<p style="text-align:center">Could not open this book.</p>';}
 }
 $('tl').onclick=e=>{const a=e.target.closest('a');if(a){goCh(+a.dataset.i,0);panels('');}};
@@ -280,11 +331,12 @@ async function goCh(i,pos){
   B.ch=i;const frag=await chapterFrag(i);
   imgUrls.slice(0,-1).length>60&&(imgUrls.forEach(URL.revokeObjectURL),imgUrls=[]);
   page.style.animation='none';void page.offsetWidth;page.style.animation='';
-  page.innerHTML='';page.appendChild(frag);
+  page.innerHTML='';const tx=document.createElement('div');tx.id='chtext';tx.appendChild(frag);page.appendChild(tx);
   const nx=document.createElement('div');nx.className='nx';
   nx.innerHTML=`<button ${i?'':'disabled'} data-d="-1">← Previous</button><button class="p" ${i<B.n-1?'':'disabled'} data-d="1">Next chapter →</button>`;
   nx.onclick=e=>{const b=e.target.closest('button');if(b&&!b.disabled)goCh(i+(+b.dataset.d),0);};
   page.appendChild(nx);
+  hideTb();paintHL();renderNotes();
   view.style.scrollBehavior='auto';
   requestAnimationFrame(()=>{view.scrollTop=pos?pos*Math.max(1,view.scrollHeight-view.clientHeight):0;view.style.scrollBehavior='';update();});
   [...$('tl').children].forEach((a,k)=>{a.classList.toggle('cur',k===i);if(k===i)a.scrollIntoView({block:'nearest'});});
@@ -302,12 +354,146 @@ let sx=0,sy=0;
 view.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY;});
 view.addEventListener('click',e=>{if(Math.abs(e.clientX-sx)>6||Math.abs(e.clientY-sy)>6)return;if(e.target.closest('a,button'))return;if(String(getSelection()))return;panels('');rd.classList.toggle('hide');});
 addEventListener('keydown',e=>{
-  if(!rd.classList.contains('open')||e.target.tagName==='INPUT'&&e.target.type==='search')return;
-  if(e.key==='Escape'){if($('toc').classList.contains('on')||$('aa').classList.contains('on'))panels('');else $('back').click();}
+  if(!rd.classList.contains('open')||e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'&&e.target.type==='search')return;
+  if(e.key==='Escape'){if($('toc').classList.contains('on')||$('aa').classList.contains('on')||$('notes').classList.contains('on'))panels('');else if(rd.classList.contains('nopen'))openNotes(false);else $('back').click();}
   if(e.key==='ArrowRight')goCh(B.ch+1,0);if(e.key==='ArrowLeft')goCh(B.ch-1,0);
 });
 addEventListener('pagehide',flush);
 showLib();
+
+/* ---------- notes ---------- */
+let nTab='ch',nEdit=null,pend=null,selData=null,selT=null;
+const stb=$('stb'),notesEl=$('notes');
+const wide=()=>innerWidth>=900;
+const chText=()=>$('chtext');
+const notesOf=()=>cur?(cur.notes||(cur.notes=[])):[];
+const chName=i=>B&&B.spine[i]?(B.names[B.spine[i].href]||('Section '+(i+1))):'';
+function openNotes(on){
+  if(wide())rd.classList.toggle('nopen',on);else panels(on?'notes':'');
+  if(on)renderNotes();
+}
+const notesOpen=()=>wide()?rd.classList.contains('nopen'):notesEl.classList.contains('on');
+function syncTabs(){[...$('ntabs').children].forEach(b=>b.classList.toggle('on',b.dataset.v===nTab));}
+function badge(){const n=notesOf().length,b=$('nbadge');b.hidden=!n;b.textContent=n>99?'99+':n;}
+function flash(els){els.forEach(el=>el.classList.add('flash'));setTimeout(()=>els.forEach(el=>el.classList.remove('flash')),1500);}
+
+/* highlights: offsets are character positions inside #chtext */
+function textNodes(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),a=[];let x;while((x=w.nextNode()))a.push(x);return a;}
+function unwrapAll(root){root.querySelectorAll('mark.hl').forEach(m=>m.replaceWith(...m.childNodes));root.normalize();}
+function wrapRange(root,s,e,id,has){
+  let pos=0;
+  for(const n of textNodes(root)){
+    const len=n.nodeValue.length,a=pos,b=pos+len;pos=b;
+    if(b<=s)continue;if(a>=e)break;
+    const from=Math.max(s,a)-a,to=Math.min(e,b)-a;
+    if(to<=from||!n.nodeValue.slice(from,to).trim())continue;
+    const r=document.createRange();r.setStart(n,from);r.setEnd(n,to);
+    const m=document.createElement('mark');m.className='hl'+(has?' has':'');m.dataset.n=id;
+    try{r.surroundContents(m);}catch(err){}
+  }
+}
+function paintHL(){
+  const c=chText();if(!c||!B)return;
+  unwrapAll(c);
+  const full=c.textContent;
+  notesOf().filter(n=>n.ch===B.ch).forEach(n=>{
+    let s=n.s,e=n.e;
+    if(full.slice(s,e)!==n.q){const i=full.indexOf(n.q);if(i<0)return;s=i;e=i+n.q.length;}
+    wrapRange(c,s,e,n.id,!!n.t);
+  });
+}
+
+/* reading the user's selection */
+function offOf(c,node,off){const r=document.createRange();r.selectNodeContents(c);r.setEnd(node,off);return r.toString().length;}
+function readSel(){
+  const c=chText(),sel=getSelection();
+  if(!c||!sel||!sel.rangeCount||sel.isCollapsed)return null;
+  const r=sel.getRangeAt(0).cloneRange(),cr=document.createRange();cr.selectNodeContents(c);
+  if(r.compareBoundaryPoints(Range.START_TO_START,cr)<0)r.setStart(cr.startContainer,cr.startOffset);
+  if(r.compareBoundaryPoints(Range.END_TO_END,cr)>0)r.setEnd(cr.endContainer,cr.endOffset);
+  if(r.collapsed||!c.contains(r.startContainer)||!c.contains(r.endContainer))return null;
+  const q=r.toString().slice(0,3000);if(!q.trim())return null;
+  const s=offOf(c,r.startContainer,r.startOffset);
+  return {s,e:s+q.length,q,rect:r.getBoundingClientRect()};
+}
+function hideTb(){stb.classList.remove('on');}
+function showTb(){
+  const d=rd.classList.contains('open')?readSel():null;
+  if(!d){hideTb();return;}
+  selData=d;
+  const w=stb.offsetWidth||170,h=stb.offsetHeight||44,touch=matchMedia('(pointer:coarse)').matches;
+  let top=touch?d.rect.bottom+14:d.rect.top-h-10;
+  if(top<70)top=d.rect.bottom+12;
+  if(top+h>innerHeight-8)top=d.rect.top-h-10;
+  top=Math.max(8,top);
+  const left=Math.max(8,Math.min(d.rect.left+d.rect.width/2-w/2,innerWidth-w-8));
+  stb.style.top=top+'px';stb.style.left=left+'px';stb.classList.add('on');
+}
+document.addEventListener('selectionchange',()=>{clearTimeout(selT);selT=setTimeout(()=>{const s=getSelection();if(!s||s.isCollapsed)hideTb();else showTb();},180);});
+view.addEventListener('scroll',()=>{if(stb.classList.contains('on'))showTb();},{passive:true});
+['mousedown','touchstart'].forEach(ev=>stb.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
+function finishSel(){hideTb();try{getSelection().removeAllRanges();}catch(e){}}
+$('stH').onclick=()=>{if(!selData)return;addNote(selData,'');finishSel();toast('Highlighted');};
+$('stN').onclick=()=>{if(!selData||!B)return;pend={ch:B.ch,s:selData.s,e:selData.e,q:selData.q};finishSel();openComposer();};
+
+/* note composer */
+function openComposer(){
+  nTab='ch';syncTabs();openNotes(true);
+  $('nc').hidden=false;$('ncq').textContent=pend.q;$('nct').value='';
+  setTimeout(()=>$('nct').focus(),340);
+}
+function closeComposer(){pend=null;$('nc').hidden=true;}
+$('ncc').onclick=closeComposer;
+$('ncs').onclick=()=>{if(!pend)return;const p=pend;addNote(p,$('nct').value.trim());closeComposer();if(!wide())openNotes(false);toast('Note saved');};
+$('nct').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeComposer();}if((e.ctrlKey||e.metaKey)&&e.key==='Enter')$('ncs').click();});
+function addNote(d,text){
+  const n={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),ch:B.ch,cn:chName(B.ch),s:d.s,e:d.e,q:d.q,t:text,ts:Date.now()};
+  notesOf().push(n);put(cur);paintHL();renderNotes();
+}
+
+/* notes list */
+function renderNotes(){
+  if(!cur||!B){return;}
+  const all=notesOf().slice().sort((a,b)=>a.ch-b.ch||a.s-b.s);
+  const list=nTab==='ch'?all.filter(n=>n.ch===B.ch):all;
+  $('nl').innerHTML=list.length?list.map(n=>{
+    const cn=nTab==='all'?`<div class="cn">${esc(n.cn||chName(n.ch))}</div>`:'';
+    if(nEdit===n.id)return `<div class="ni" data-id="${n.id}">${cn}<div class="q">${esc(n.q)}</div><textarea id="ned" maxlength="2000" placeholder="Write your note…">${esc(n.t)}</textarea><div class="nr"><button class="nbtn" data-a="ecancel">Cancel</button><button class="nbtn p" data-a="esave">Save</button></div></div>`;
+    return `<div class="ni" data-id="${n.id}">${cn}<div class="q">${esc(n.q)}</div>${n.t?`<div class="t">${esc(n.t)}</div>`:''}<div class="ia"><button data-a="edit">${n.t?'Edit':'Add note'}</button><button data-a="del">Delete</button></div></div>`;
+  }).join(''):`<div class="nempty">${nTab==='ch'?'No notes in this chapter yet.':'No notes yet.'}<br>Select any text while reading, then tap Note or Highlight.</div>`;
+  badge();
+}
+$('ntabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;nTab=b.dataset.v;syncTabs();renderNotes();};
+$('nb').onclick=()=>openNotes(!notesOpen());
+$('ncl').onclick=()=>{closeComposer();openNotes(false);};
+$('nl').onclick=e=>{
+  const it=e.target.closest('.ni');if(!it)return;
+  const id=it.dataset.id,a=e.target.closest('[data-a]');
+  if(a){
+    const k=a.dataset.a,n=notesOf().find(x=>x.id===id);
+    if(k==='edit'){nEdit=id;renderNotes();setTimeout(()=>{const t=$('ned');if(t){t.focus();t.setSelectionRange(t.value.length,t.value.length);}},30);}
+    else if(k==='ecancel'){nEdit=null;renderNotes();}
+    else if(k==='esave'){if(n){n.t=$('ned').value.trim();put(cur);}nEdit=null;paintHL();renderNotes();}
+    else if(k==='del'){if(confirm('Delete this note?')){cur.notes=notesOf().filter(x=>x.id!==id);put(cur);paintHL();renderNotes();}}
+    return;
+  }
+  if(e.target.closest('textarea'))return;
+  jump(id);
+};
+async function jump(id){
+  const n=notesOf().find(x=>x.id===id);if(!n||!B)return;
+  if(n.ch!==B.ch){await goCh(n.ch,0);await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));}
+  const ms=[...page.querySelectorAll('mark.hl[data-n="'+id+'"]')];
+  if(!wide())openNotes(false);
+  if(ms.length){ms[0].scrollIntoView({block:'center',behavior:'smooth'});flash(ms);}
+}
+/* tapping a highlight in the text opens its note */
+page.addEventListener('click',e=>{
+  const m=e.target.closest('mark.hl');if(!m||String(getSelection()))return;
+  e.stopPropagation();
+  nTab='ch';syncTabs();openNotes(true);
+  requestAnimationFrame(()=>{const it=$('nl').querySelector('[data-id="'+m.dataset.n+'"]');if(it){it.scrollIntoView({block:'nearest',behavior:'smooth'});flash([it]);}});
+});
 
 /* ---- Install app button ---- */
 let deferredInstall=null;
@@ -325,7 +511,7 @@ try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
 if('serviceWorker' in navigator){
   addEventListener('load',()=>{
     navigator.serviceWorker.register('sw.js').then(()=>navigator.serviceWorker.ready).then(async()=>{
-      const c=await caches.open('epubreader-v3'),ks=(await c.keys()).map(r=>r.url);
+      const c=await caches.open('epubreader-v4'),ks=(await c.keys()).map(r=>r.url);
       const ok=['index.html','lib/jszip.min.js'].every(n=>ks.some(u=>u.endsWith(n)));
       setTimeout(()=>toast(ok?'Ready to use offline':'Offline files not saved yet. Reload once while online.'),900);
     }).catch(()=>{});
